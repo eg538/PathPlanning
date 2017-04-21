@@ -2,17 +2,17 @@ package src;
 import java.util.ArrayList;
 
 public class Grid {
-	private Coord[][] map;
-	private int nheight;
-	private double height;
-	private int nwidth;
-	private double width;
-	private double scale;
-	private Coord R2Pos;
+	public Coord[][] map;
+	public int nheight;
+	public float height;
+	public int nwidth;
+	public float width;
+	public float scale;
+	public Coord R2Pos;
 	
-	public Grid(double h, double w, double s){
-		height = h;
+	public Grid(float w, float h, float s){
 		width = w;
+		height = h;
 		scale = s;
 		nheight = (int) (h/s + .5);
 		nwidth = (int) (w/s + .5);
