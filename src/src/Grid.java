@@ -10,18 +10,18 @@ public class Grid {
 	public float scale;
 	public Coord R2Pos;
 	
-	public Grid(float w, float h, float s, float startx, float starty){
+	public Grid(float w, float h, float scal, float startx, float starty){
 		width = w;
 		height = h;
-		scale = s;
-		nheight = (int) (h/s + .5);
-		nwidth = (int) (w/s + .5);
+		scale = scal;
+		nheight = (int) (h/scal + .5);
+		nwidth = (int) (w/scal + .5);
 		map = new Coord[nheight][nwidth];
 		R2Pos = new Coord(startx, starty);
 		int[] intInit = intPos(startx, starty);
 		for(int i = 0; i < nheight; i++){
 			for(int j = 0; j < nwidth; j++){
-				map[i][j] = new Coord(((float)(.5))*scale + scale*((float)(j)), ((float)(.5))*scale + scale*((float)(i)));
+				map[i][j] = new Coord((.5f)*scale + scale*((float)(j)), (.5f)*scale + scale*((float)(i)));
 			}
 		}
 		map[intInit[0]][intInit[1]] = R2Pos;
@@ -42,16 +42,19 @@ public class Grid {
 		}
 	}*/
 	
-	public void addObstacles(ArrayList<float[]> obs){
-		int[] obstnum;
-		for(float[] o: obs){
-			obstnum = intPos(o[0], o[1]);
-			map[obstnum[0]][obstnum[1]].obst = true;
+	public void addObstacles(ArrayList<int[]> obs){
+		for(int[] o: obs){
+			map[o[0]][o[1]].obst = true;
 		}
 	}
 
-	private void calcObst(Obstacles obs){
-		//figure out what to return for this method
+	private void calcObst(ListObstacles obs){
+		int[] lefttop = null;
+		int[] rightbottom = null;
+		ArrayList<int[]> coordObst = new ArrayList<int[]>();
+		for(Obstacle block: obs.obstacles){
+			
+		}
 	}
 	
 	/** 
@@ -79,6 +82,9 @@ public class Grid {
 		}
 		if(y - 1 >= 0){
 			adj.add(map[x][y - 1]);
+			if(x + 1 < nheight){
+				adj.add(map[x + 1][y - 1]);
+			}
 		}
 		return adj;
 		
@@ -86,9 +92,13 @@ public class Grid {
 	
 	public int[] intPos(float x, float y){
 		int[] pos = new int[2];
-		pos[0] = (int) ((y - scale/2)/scale);
-		pos[1] = (int) ((x - scale/2)/scale);
+		pos[0] = (int) ((y - (.5f)*scale)/scale + .5);
+		pos[1] = (int) ((x - (.5f)*scale)/scale + .5);
 		return pos;
+		
+		//width = scale, height = scale
+		//coordinates: width = array1stcoord*scale -> array1stcoord*scale + scale
+		//height = array2ndcoord*scale -> array2ndcoord*scale + scale
 	}
 	
 	public float distance(Coord a, Coord b){

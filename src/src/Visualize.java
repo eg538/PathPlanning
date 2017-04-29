@@ -13,22 +13,12 @@ public class Visualize {
 		window.add(canvas);
 		window.pack();
 		
-		Grid g = new Grid(4.f, 5.f, .5f, .25f, .25f);
-		ArrayList<float[]> obs = new ArrayList<float[]>();
-		float[] obst1 = new float[2];
-		obst1[0] = 2.25f;
-		obst1[1] = 2.25f;
-		
-		
-		obs.add(obst1);
-		
-		g.addObstacles(obs);
+		Grid g = new Grid(10.f, 8.f, .05f, 4.5f, 6.95f);
 		Coord position = g.R2Pos;
-		Dijkstra d = new Dijkstra(3.75f, 4.75f);
+		Dijkstra d = new Dijkstra(9.75f, 7.75f);
 		
 		Path p = d.calcPath(g);
 		
-		canvas.setObstacles(obs);
 		canvas.setGrid(g);
 		canvas.setPath(p);
 		canvas.setPosition(position);
@@ -44,7 +34,7 @@ class VisualizationCanvas extends Canvas {
 	private Grid grid = null;
 	private Path path = null;
 	private Coord position = null;
-	private ArrayList<float[]> obst;
+	private ArrayList<Obstacle> obst = null;
 	
 	public VisualizationCanvas() {
 		super();
@@ -56,7 +46,7 @@ class VisualizationCanvas extends Canvas {
 		grid = g;
 	}
 	
-	public void setObstacles(ArrayList<float[]> obsts){
+	public void setObstacles(ArrayList<Obstacle> obsts){
 		obst = obsts;
 	}
 	
@@ -99,18 +89,18 @@ class VisualizationCanvas extends Canvas {
 			
 			if (position != null) {
 				g.setColor(Color.BLUE);
-				g.drawArc((int) (position.x* scale - (grid.scale*scale)/2), (int) (position.y*scale- (grid.scale*scale)/2),
+				g.drawArc((int) (position.x* scale - (grid.scale*scale)/2), (int) (position.y*scale - (grid.scale*scale)/2),
 						(int) (grid.scale*scale), (int) (grid.scale*scale),
 						0, 360);
 			}
 			
-			if(!obst.isEmpty()){
-				for(float[] block: obst){
+			if(obst != null){
+				for(Obstacle block: obst){
 					g.setColor(Color.DARK_GRAY);
 					//g.fillArc((int) (block[0]* scale - (grid.scale*scale)/2), (int) (block[1]*scale- (grid.scale*scale)/2),
 						//	(int) (grid.scale*scale), (int) (grid.scale*scale),
 							//0, 360);
-					g.fillRect((int) (block[0]* scale - (grid.scale*scale)/2), (int) (block[1]*scale- (grid.scale*scale)/2),
+					g.fillRect((int) (block.xpos* scale), (int) (block.ypos*scale),
 							(int) (grid.scale*scale), (int) (grid.scale*scale));
 				}
 			}

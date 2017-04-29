@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GridTest {
@@ -12,10 +13,12 @@ public class GridTest {
 	
 	@Before
 	public void prep(){
-		g = new Grid(4, 5, (float) .5, 0.25f, 0.25f);
+		g = new Grid(10f, 8f, (float) .45, 0.25f, 0.25f);
 		for(int i = 0; i < g.map.length; i++){
 			for(int j = 0; j < g.map[0].length; j++){
-				System.out.print("(" + g.map[i][j].x + ", " + g.map[i][j].y + ")" + " [" + i + ", " + j +"]    ");
+				//System.out.print("(" + g.map[i][j].x + ", " + g.map[i][j].y + ")");
+				int[] intCoords = g.intPos(g.map[i][j].x, g.map[i][j].y);
+				System.out.print("[" + intCoords[0] + ", " + intCoords[1] + "] ");
 			}
 			System.out.println();
 		}
@@ -29,8 +32,8 @@ public class GridTest {
 	
 	@Test
 	public void testIntPos() {
-		assertEquals(g.intPos((float).25, (float).25)[0], 0);
-		assertEquals(g.intPos((float)1.25, (float).25)[1], 2);
+		assertEquals(g.intPos(.025f, .02f)[0], 0);
+		assertEquals(g.intPos(.04f, .005f)[1], 0);
 	}
 	
 	@Test
