@@ -27,34 +27,39 @@ public class Grid {
 		map[intInit[0]][intInit[1]] = R2Pos;
 	}
 	
-	/*public Grid(float w, float h, float s, Coord start){
-		width = w;
-		height = h;
-		scale = s;
-		nheight = (int) (h/s + .5);
-		nwidth = (int) (w/s + .5);
-		map = new Coord[nheight][nwidth];
-		R2Pos = start;
-		for(int i = 0; i < nheight; i++){
-			for(int j = 0; j < nwidth; j++){
-				map[i][j] = new Coord(.5f*scale + scale*((float)(j)), .5f*scale + scale*((float)(i)));
-			}
-		}
-	}*/
-	
 	public void addObstacles(ArrayList<int[]> obs){
 		for(int[] o: obs){
 			map[o[0]][o[1]].obst = true;
 		}
 	}
 
-	private void calcObst(ListObstacles obs){
-		int[] lefttop = null;
-		int[] rightbottom = null;
+	private ArrayList<int[]> calcObst(ListObstacles obs){
 		ArrayList<int[]> coordObst = new ArrayList<int[]>();
+		float top;
+		float bottom;
+		float left;
+		float right;
+		float trackv;
+		float trackh;
 		for(Obstacle block: obs.obstacles){
+			top = block.xpos + block.height*.5f;
+			bottom = block.xpos - block.height*.5f;
+			left = block.ypos - block.width*.5f;
+			right = block.ypos + block.width*.5f;
+			trackv = top;
+			trackh = left;
+			while(trackv <= bottom || trackh != right){
+				coordObst.add(intPos(trackv, trackh));
+				trackv += scale;
+				if(trackv > bottom){
+					trackv = top;
+					trackh = right;
+				}
+			}
+			coordObst.add(intPos(bottom, trackh));
 			
 		}
+		return coordObst;
 	}
 	
 	/** 
