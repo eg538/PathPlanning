@@ -26,11 +26,14 @@ public class Dijkstra implements PathPlanning {
 		PriorityQueue<Coord> queue = new PriorityQueue<Coord>(comp);
 		g.R2Pos.dist = 0;
 		init = g.R2Pos;
+		if(init.obst){
+			goal = init;
+		}
 		queue.add(g.R2Pos);
 		Coord head = null;
 		ArrayList<Coord> neighbors;
 		int[] intCoords;
-		while(!queue.peek().equals(goal)){
+		while(!(queue.peek().equals(goal) || goal.equals(init))){
 			head = queue.poll();
 			intCoords = g.intPos(head.x, head.y);
 			neighbors = g.adjCoords(intCoords[0], intCoords[1]);
@@ -38,6 +41,9 @@ public class Dijkstra implements PathPlanning {
 				if(c.dist == -1){
 					if(c.obst){
 						c.dist = Float.POSITIVE_INFINITY;
+						if(c.equals(goal)){
+							goal = init;
+						}
 					}else{
 						c.dist = g.distance(c, head) + head.dist;
 					}
