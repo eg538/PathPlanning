@@ -16,7 +16,7 @@ public class Visualize {
 
 		Grid g = new Grid(100.f, 100.f, 13f, 2f, 2f);
 		Coord position = g.R2Pos;
-		Dijkstra d = new Dijkstra(90f, 90.6f);
+		Dijkstra d = new Dijkstra(99f, 99.6f);
 		Obstacle testing = new Obstacle(60f, 60f, 20.7f, 10.89f);
 		g.addObstacle(testing);
 		Path p = d.calcPath(g);
@@ -97,9 +97,9 @@ class VisualizationCanvas extends Canvas {
 			if (!obst.isEmpty()) {
 				for (Obstacle block : obst) {
 					g.setColor(Color.DARK_GRAY);
-					g.fillRect((int) (block.xpos * scale - ((block.width)* scale) / 2),
-							(int) (block.ypos * scale - ((block.height)* scale) / 2), (int) ((block.width) * scale),
-							(int) ((block.height) * scale));
+					g.fillRect((int) (block.xpos * scale - ((block.width + 26f)* scale) / 2),
+							(int) (block.ypos * scale - ((block.height + 26f)* scale) / 2), (int) ((block.width + 26f) * scale),
+							(int) ((block.height + 26f) * scale));
 				}
 			}
 		}

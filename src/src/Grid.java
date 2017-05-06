@@ -38,27 +38,30 @@ public class Grid {
 		float right;
 		int[] coordsOne;
 		int[] coordsTwo;
-		top = obst.ypos - obst.height * .5f - (13f/scale);
+		top = obst.ypos - obst.height * .5f - 13f;
 		if(top < 0){
 			top = 0;
 		}
-		bottom = obst.ypos + obst.height * .5f + (13f/scale);
+		bottom = obst.ypos + obst.height * .5f + 13f;
 		if(bottom > height){
 			bottom = height;
 		}
-		left = obst.xpos - obst.width * .5f - (13f/scale);
+		left = obst.xpos - obst.width * .5f - 13f;
 		if(left < 0){
 			left = 0;
 		}
-		right = obst.xpos + obst.width * .5f + (13f/scale);
+		right = obst.xpos + obst.width * .5f + 13f;
 		if(right > width){
 			right = width;
 		}
 		coordsOne = intPos(left, top);
+		System.out.println(coordsOne[0] + ", " + coordsOne[1]);
 		coordsTwo = intPos(right, bottom);
+		System.out.println(coordsTwo[0] + ", " + coordsTwo[1]);
 		for (int t = coordsOne[0]; t <= coordsTwo[0]; t++) {
 			for(int u = coordsOne[1]; u <= coordsTwo[1]; u++){
 				map[t][u].obst = true;
+				
 			}
 		}
 	}
